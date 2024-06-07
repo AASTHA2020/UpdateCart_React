@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import PrdoductCard from "./components/Product";
+import ProductCard from "./components/Product"; // Fixed the typo in the import statement
 import './App.css';
 
 function App() {
@@ -34,64 +34,59 @@ function App() {
   const [total, setTotal] = useState(0);
 
   function increaseQuantity(index) {
-    let temp = [...products];
-    temp[index].quantity += 1;
-    setProducts(temp);
+    let temp = [...products];        
+    temp[index].quantity += 1;       
+    setProducts(temp);              
   }
 
-  function deccreaseQuantity(index) {
-    let temp = [...products];
+  function decreaseQuantity(index) {
+    let temp = [...products];    
     if (temp[index].quantity > 1) {
-      temp[index].quantity -= 1;
-      setProducts(temp);
+      temp[index].quantity -= 1;     
+      setProducts(temp);             
     } else {
-      removeProduction(index);
+      removeProduction(index);      
     }
   }
 
   function removeProduction(index) {
-    let temp = products.filter((item, idx) => {
-      if (idx != index) return item;
-    });
-
+    let temp = products.filter((item, idx) => idx !== index);
     setProducts(temp);
   }
 
   useEffect(() => {
     let sum = 0;
-    products.forEach((item, index) => {
-      sum += item.price * item.quantity;
+    products.forEach((item) => {
+      sum += item.price * item.quantity;      
     });
-    setTotal(sum);
+    setTotal(sum);          
   }, [products]);
 
   return (
-    <div>
+    <div className="app-container">
       <Navbar />
 
-      {products.length > 0 ? (
-        <div>
-          {products.map((item, index) => {
-            return (
-              <PrdoductCard
-                key={index}
-                img={item.img}
-                title={item.title}
-                price={item.price}
-                quant={item.quantity}
-                inc={increaseQuantity}
-                dec={deccreaseQuantity}
-                index={index}
-                rm={removeProduction}
-              />
-            );
-          })}
+      {products.length > 0 ? (        
+        <div className="products-container">
+          {products.map((item, index) => (
+            <ProductCard
+              key={index}
+              img={item.img}
+              title={item.title}
+              price={item.price}
+              quant={item.quantity}
+              inc={increaseQuantity}
+              dec={decreaseQuantity}
+              index={index}
+              rm={removeProduction}
+            />
+          ))}
 
-          <h3>Total Price: {total}</h3>
-          <button onClick={() => setProducts([])}>Clear Cart</button>
+          <h3 className="total-price">Total Price: ${total}</h3>
+          <button className="clear-cart-button" onClick={() => setProducts([])}>Clear Cart</button>
         </div>
       ) : (
-        <p>There is no item in your bag</p>
+        <p className="empty-cart-message">There is no item in your bag</p>
       )}
     </div>
   );

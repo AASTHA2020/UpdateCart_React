@@ -1,6 +1,7 @@
 import React from "react";
+import './Product.css'; // Make sure to import the CSS file for ProductCard styling
 
-export default function PrdoductCard({
+export default function ProductCard({
   img,
   title,
   price,
@@ -11,17 +12,17 @@ export default function PrdoductCard({
   rm,
 }) {
   return (
-    <div style={{ display: "flex", gap: "29px" }}>
-      <img width="100px" src={img} />
-      <div>
-        <p>{title}</p>
-        <p>{price}$</p>
-        <button onClick={() => rm(index)}>Remove</button>
+    <div className="product-card">
+      <img className="product-img" src={img} alt={title} />
+      <div className="product-details">
+        <p className="product-title">{title}</p>
+        <p className="product-price">${price}</p>
+        <button className="remove-button" onClick={() => rm(index)}>Remove</button>
       </div>
-      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <button onClick={() => inc(index)}>+</button>
-        <p>{quant}</p>
-        <button onClick={() => dec(index)}>-</button>
+      <div className="quantity-controls">
+        <button className="quantity-button" onClick={() => inc(index)}>+</button>
+        <p className="product-quantity">{quant}</p>
+        <button className="quantity-button" onClick={() => dec(index)}>-</button>
       </div>
     </div>
   );
